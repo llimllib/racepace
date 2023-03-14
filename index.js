@@ -9,9 +9,9 @@ const METERS_PER_MARATHON = 42195;
 
 const SECONDS_HOUR = 3600;
 
-const M_SP = /^(m|meter|meters|metre|metres)$/i;
-const KM_SP = /^(km|kilometer|kilometers|kilometre|kilometres)$/i;
-const MI_SP = /^(mi|mile|miles)$/i;
+const M_SP = /^(m|ms|meter|meters|metre|metres)$/i;
+const KM_SP = /^(km|kms|kilometer|kilometers|kilometre|kilometres)$/i;
+const MI_SP = /^(mi|mis|mile|miles)$/i;
 const MARATHON = /^(marathon)$/i;
 const HALF_MARATHON = /^(half marathon)$/i;
 
