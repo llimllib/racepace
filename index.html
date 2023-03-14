@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Race Pace Calculator</title>
+  <script src="index.js"></script>
+  <style>
+    body {
+      font-size: 18px;
+    }
+
+    td {
+      padding: 2px;
+    }
+
+    .time {
+      padding-left: 20px;
+      font-weight: bold;
+    }
+
+    .query {
+      margin: 0;
+      padding: 3px;
+      outline: none;
+      height: 34px;
+      font-size: 18px;
+    }
+
+    .box.flex {
+      display: flex;
+      justify-content: center;
+    }
+
+    .box {
+      margin-top: 100px;
+      padding: .5rem;
+      height: 400px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.03);
+      border-radius: 4px;
+
+      color: #84613D;
+      font-family: "Lucida Console", Monaco, monospace;
+      background: #FDF9EA;
+      border-bottom: 1px solid #F9F2D6;
+      border-right: 1px solid #F9F2D6;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box flex">
+    <div class="col">
+      <input id="pace" class="query" value="3:30 marathon">
+      <table style="padding: 10px">
+        <tr>
+          <td>200m</td>
+          <td class="time" id="t200m"></td>
+        </tr>
+        <tr>
+          <td>400m</td>
+          <td class="time" id="t400m"></td>
+        </tr>
+        <tr>
+          <td>1km</td>
+          <td class="time" id="t1km"></td>
+        </tr>
+        <tr>
+          <td>1mi</td>
+          <td class="time" id="t1mi"></td>
+        </tr>
+        <tr>
+          <td>2mi</td>
+          <td class="time" id="t2mi"></td>
+        </tr>
+        <tr>
+          <td>5km</td>
+          <td class="time" id="t5km"></td>
+        </tr>
+        <tr>
+          <td>10km</td>
+          <td class="time" id="t10km"></td>
+        </tr>
+        <tr>
+          <td>10mi</td>
+          <td class="time" id="t10mi"></td>
+        </tr>
+        <tr>
+          <td>half marathon</td>
+          <td class="time" id="thm"></td>
+        </tr>
+        <tr>
+          <td>marathon</td>
+          <td class="time" id="tm"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="flex">
+    Some examples of what you can do:
+    <!-- TODO: 
+      - make these links that work
+      - support custom splits: "85 per 400m over 600m" maybe?
+    -->
+    <ul>
+      <li>4:00/km</li>
+      <li>85 per 400m</li>
+      <li>50:00 10 mile</li>
+      <li>3:00 marathon</li>
+      <li>1:20 half marathon</li>
+    </ul>
+  </div>
+
+</html>
