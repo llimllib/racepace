@@ -53,6 +53,27 @@
       border-radius: 10px;
       border: 1px solid #84613D;
     }
+
+    div.examples {
+      margin-top: 40px;
+    }
+
+    ul.examples {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    ul.examples li {
+      padding: 10px;
+      border: 1px solid black;
+      border-radius: 10px;
+      margin: 5px;
+    }
+
+    ul.examples li:hover {
+      background-color: #FDF9FA;
+    }
   </style>
 </head>
 
@@ -106,18 +127,17 @@
           </tr>
         </table>
       </div>
-      <div class="box">
-        Some examples of what you can do:
+      <div class="box examples">
+        Some examples of input you can use; click to try it out
         <!-- TODO: 
-      - make these links that work
       - support custom splits: "85 per 400m over 600m" maybe?
     -->
-        <ul>
-          <li>4:00/km</li>
-          <li>85 per 400m</li>
-          <li>50:00 10 mile</li>
-          <li>3:00 marathon</li>
-          <li>1:20 half marathon</li>
+        <ul class="examples">
+          <li data-example=""><label>4:00/km</label></li>
+          <li data-example=""><label>85 per 400m</label></li>
+          <li data-example=""><label>1:25 10 mile</label></li>
+          <li data-example=""><label>3:00 marathon</label></li>
+          <li data-example=""><label>1:20 half marathon</label></li>
         </ul>
       </div>
     </div>

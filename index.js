@@ -1,4 +1,5 @@
 const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
 
 // The statute mile was standardised between the British Commonwealth and the
 // United States by an international agreement in 1959, when it was formally
@@ -162,10 +163,19 @@ function handlePaceChange() {
   $("#tm").innerHTML = displayTime(seconds_per_m * METERS_PER_MARATHON);
 }
 
+function useExample(evt) {
+  console.log(evt);
+  $("#pace").value = evt.target.innerText;
+  handlePaceChange();
+}
+
 window.addEventListener("DOMContentLoaded", async (_evt) => {
   handlePaceChange();
   $("#pace").addEventListener("change", handlePaceChange);
   // if we use keydown instead of keyup, we don't get the field after the
   // user's change
   $("#pace").addEventListener("keyup", handlePaceChange);
+  $$("[data-example]").forEach((el) =>
+    el.addEventListener("click", useExample)
+  );
 });
