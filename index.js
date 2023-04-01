@@ -28,7 +28,8 @@ function carefulFloor(n) {
   return Math.floor(n);
 }
 
-// convert a number of seconds into a string of the format hh:mm:ss
+// convert a number of seconds into a reasonable output string for display.
+// Will try to round numbers in a way that's intuitive
 function displayTime(seconds) {
   const hours = carefulFloor(seconds / SECONDS_HOUR);
   seconds = Math.max(0, seconds - hours * SECONDS_HOUR);
