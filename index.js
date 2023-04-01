@@ -16,7 +16,7 @@ const MI_SP = /^(mi|mis|mile|miles)$/i;
 const MARATHON = /^(marathon)$/i;
 const HALF_MARATHON = /^(half marathon)$/i;
 
-const EPSILON = 0.0001;
+const EPSILON = 0.01;
 
 // in the case where seconds = 1799.999999 -> seconds/60 = 29.999999999
 // which we floor to 29, we want to actually round up. So if
@@ -31,11 +31,11 @@ function carefulFloor(n) {
 // convert a number of seconds into a string of the format hh:mm:ss
 function displayTime(seconds) {
   const hours = carefulFloor(seconds / SECONDS_HOUR);
-  seconds = seconds - hours * SECONDS_HOUR;
+  seconds = Math.max(0, seconds - hours * SECONDS_HOUR);
 
   const minutes = carefulFloor(seconds / 60);
   const minutes_padded = ("" + minutes).padStart(2, "0");
-  seconds = seconds - minutes * 60;
+  seconds = Math.max(0, seconds - minutes * 60);
 
   const seconds_padded = ("" + Math.round(seconds)).padStart(2, "0");
 
@@ -83,7 +83,8 @@ function parseUnit(input) {
 function parseInput(input) {
   let time_unit = input.split(/per|\//);
   if (time_unit.length < 2) {
-    // We didn't find "x per unit" or "x/unit"; try "x unit", so that users can say "3:00 marathon" or something like that
+    // We didn't find "x per unit" or "x/unit"; try "x unit", so that users can
+    // say "3:00 marathon" or something like that
     time_unit = input.split(" ");
     if (time_unit.length < 2) {
       console.log("couldn't find a unit");
