@@ -9,10 +9,6 @@
       font-size: 18px;
     }
 
-    td {
-      padding: 2px;
-    }
-
     .time {
       padding-left: 20px;
       font-weight: bold;
@@ -20,8 +16,8 @@
 
     .query {
       margin: 0;
-      padding: 3px;
-      outline: none;
+      padding: 10px;
+      outline: 1px solid black;
       height: 34px;
       font-size: 18px;
       width: 95%;
@@ -29,11 +25,11 @@
 
     .wrapper {
       width: 100%;
-      margin-top: 10px;
+      margin-top: 50px;
       padding: .5rem;
-      color: #84613D;
+      color: #555;
       font-family: "Lucida Console", Monaco, monospace;
-      background: #FDF9EA;
+      background: white;
       border-bottom: 1px solid #F9F2D6;
       border-right: 1px solid #F9F2D6;
       display: flex;
@@ -42,16 +38,23 @@
     }
 
     .column {
-      width: 350px;
+      width: 400px;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 25px;
+      font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+      text-align: center;
     }
 
     .box {
       padding: 10px;
-    }
-
-    .bordered {
-      border-radius: 10px;
-      border: 1px solid #84613D;
     }
 
     div.examples {
@@ -69,10 +72,27 @@
       border: 1px solid black;
       border-radius: 10px;
       margin: 5px;
+      background-color: #eee;
     }
 
     ul.examples li:hover {
       background-color: #FDF9FA;
+    }
+
+    .pacetable {
+      padding: 10px;
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
+
+    .pacetable tr {
+      width: 100%;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .pacetable td {
+      padding-bottom: 5px;
+      padding-top: 5px;
     }
   </style>
 </head>
@@ -80,11 +100,13 @@
 <body>
   <div class="wrapper">
     <div class="column">
+      <h1>Race Pace Calculator</h1>
       <div class="box input">
         <input id="pace" class="query" value="3:30 marathon">
       </div>
-      <div class="box bordered">
-        <table style="padding: 10px">
+      <div class="box">
+        <h2 style="text-align: center">Splits</h2>
+        <table class="pacetable">
           <tr>
             <td>200m</td>
             <td class="time" id="t200m"></td>
@@ -128,16 +150,16 @@
         </table>
       </div>
       <div class="box examples">
-        Some examples of input you can use; click to try it out
+        Some examples of input you can use; click one to try it out
         <!-- TODO: 
       - support custom splits: "85 per 400m over 600m" maybe?
     -->
         <ul class="examples">
-          <li data-example=""><label>4:00/km</label></li>
-          <li data-example=""><label>85 per 400m</label></li>
-          <li data-example=""><label>1:25 10 mile</label></li>
-          <li data-example=""><label>3:00 marathon</label></li>
-          <li data-example=""><label>1:20 half marathon</label></li>
+          <li data-example="" class="lbutton"><label>4:00/km</label></li>
+          <li data-example="" class="lbutton"><label>85 per 400m</label></li>
+          <li data-example="" class="lbutton"><label>1:25 10 mile</label></li>
+          <li data-example="" class="lbutton"><label>3:00 marathon</label></li>
+          <li data-example="" class="lbutton"><label>1:20 half marathon</label></li>
         </ul>
       </div>
     </div>
