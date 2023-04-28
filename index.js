@@ -11,7 +11,7 @@ const METERS_PER_MARATHON = 42195;
 const SECONDS_HOUR = 3600;
 
 const M_SP = /^(m|ms|meter|meters|metre|metres)$/i;
-const KM_SP = /^(km|kms|kilometer|kilometers|kilometre|kilometres)$/i;
+const KM_SP = /^(k|km|kms|kilometer|kilometers|kilometre|kilometres)$/i;
 const MI_SP = /^(mi|mis|mile|miles)$/i;
 const MARATHON = /^(marathon)$/i;
 const HALF_MARATHON = /^(half marathon)$/i;
@@ -127,7 +127,22 @@ function parseInput(input) {
     seconds = hour * 3600 + min * 60 + +sec;
   }
 
-  return seconds / unitM;
+  return [unitM, seconds, seconds / unitM];
+}
+
+function calculateVdot(distanceM, timeS) {
+  // t is time in minutes, v velocity in meters/minute
+  // calculations from: https://www.omnicalculator.com/sports/vo2-max-runners
+  const t = timeS / 60;
+  const v = distanceM / t;
+
+  const racevo2 = -4.6 + 0.182258 * v + 0.000104 * v * v;
+  const vo2max =
+    0.8 +
+    0.1894393 * Math.pow(Math.E, -0.012778 * t) +
+    0.2989558 * Math.pow(Math.E, -0.1932605 * t);
+
+  return racevo2 / vo2max;
 }
 
 function clearAll() {
@@ -141,15 +156,19 @@ function clearAll() {
   $("#t10mi").innerHTML = "";
   $("#thm").innerHTML = "";
   $("#tm").innerHTML = "";
+  $("#vdot").innerHTML = "";
 }
 
 function handlePaceChange() {
   const val = $("#pace").value;
-  seconds_per_m = parseInput(val);
+  let [distanceM, timeS, seconds_per_m] = parseInput(val);
   if (!seconds_per_m) {
     clearAll();
     return;
   }
+
+  const vdot = calculateVdot(distanceM, timeS);
+  $("#vdot").innerHTML = Math.round(vdot * 10) / 10;
 
   console.log("seconds per meter: ", seconds_per_m);
 

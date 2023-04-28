@@ -1,194 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Race Pace Calculator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="index.js"></script>
-    <style>
-      body {
-        font-size: 18px;
-      }
 
-      .time {
-        padding-left: 20px;
-        font-weight: bold;
-      }
+<head>
+  <title>Race Pace Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="index.js"></script>
+  <style>
+    body {
+      font-size: 18px;
+    }
 
-      .query {
-        margin: 0;
-        padding: 10px;
-        outline: 1px solid black;
-        height: 34px;
-        font-size: 18px;
-        width: 95%;
-      }
+    .time {
+      padding-left: 20px;
+      font-weight: bold;
+    }
 
-      .wrapper {
-        width: 100%;
-        margin-top: 50px;
-        margin-bottom: 200px;
-        padding: 0.5rem;
-        color: #555;
-        font-family: "Lucida Console", Monaco, monospace;
-        background: white;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
+    .query {
+      margin: 0;
+      padding: 10px;
+      outline: 1px solid black;
+      height: 34px;
+      font-size: 18px;
+      width: 95%;
+    }
 
-      .column {
-        width: 400px;
-      }
+    .wrapper {
+      width: 100%;
+      margin-top: 50px;
+      margin-bottom: 200px;
+      padding: 0.5rem;
+      color: #555;
+      font-family: "Lucida Console", Monaco, monospace;
+      background: white;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-      h1 {
-        font-size: 30px;
-        font-family: Seravek, "Gill Sans Nova", Ubuntu, Calibri, "DejaVu Sans",
-          source-sans-pro, sans-serif;
-        text-align: center;
-      }
+    .column {
+      width: 400px;
+    }
 
-      h2 {
-        font-size: 25px;
-        font-family: Seravek, "Gill Sans Nova", Ubuntu, Calibri, "DejaVu Sans",
-          source-sans-pro, sans-serif;
-        text-align: center;
-      }
+    h1 {
+      font-size: 30px;
+      font-family: Seravek, "Gill Sans Nova", Ubuntu, Calibri, "DejaVu Sans",
+        source-sans-pro, sans-serif;
+      text-align: center;
+    }
 
-      .box {
-        padding: 10px;
-      }
+    h2 {
+      font-size: 25px;
+      font-family: Seravek, "Gill Sans Nova", Ubuntu, Calibri, "DejaVu Sans",
+        source-sans-pro, sans-serif;
+      text-align: center;
+    }
 
-      div.examples {
-        margin-top: 40px;
-      }
+    .vdotlabel {
+      font-size: 25px;
+      font-family: Seravek, "Gill Sans Nova", Ubuntu, Calibri, "DejaVu Sans",
+        source-sans-pro, sans-serif;
+      text-align: center;
+    }
 
-      ul.examples {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
+    .box {
+      padding: 10px;
+    }
 
-      ul.examples li {
-        padding: 10px;
-        border: 1px solid black;
-        border-radius: 10px;
-        margin: 5px;
-        background-color: #eee;
-      }
+    div.examples {
+      margin-top: 40px;
+    }
 
-      ul.examples li:hover {
-        background-color: #fdf9fa;
-      }
+    ul.examples {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
 
-      .pacetable {
-        width: 300px;
-        padding: 10px;
-        border-collapse: collapse;
-        margin: 0 auto;
-      }
+    ul.examples li {
+      padding: 10px;
+      border: 1px solid black;
+      border-radius: 10px;
+      margin: 5px;
+      background-color: #eee;
+    }
 
-      .pacetable tr {
-        width: 100%;
-        border-bottom: 1px solid #ddd;
-      }
+    ul.examples li:hover {
+      background-color: #fdf9fa;
+    }
 
-      .pacetable td {
-        padding-bottom: 5px;
-        padding-top: 5px;
-      }
-    </style>
-  </head>
+    .pacetable {
+      width: 300px;
+      padding: 10px;
+      border-collapse: collapse;
+      margin: 0 auto;
+    }
 
-  <body>
-    <div class="wrapper">
-      <div class="column">
-        <h1>Race Pace Calculator</h1>
+    .pacetable tr {
+      width: 100%;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .pacetable td {
+      padding-bottom: 5px;
+      padding-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="column">
+      <h1>Race Pace Calculator</h1>
+      <p>
+        Enter a race pace to see splits. See below for examples of input you
+        can use.
+      </p>
+
+      <div class="box input">
+        <input id="pace" class="query" value="3:30 marathon" aria-label="race pace" />
+      </div>
+      <div class="box">
+        <h2 style="text-align: center">Splits</h2>
+        <table class="pacetable">
+          <tr>
+            <td>200m</td>
+            <td class="time" id="t200m"></td>
+          </tr>
+          <tr>
+            <td>400m</td>
+            <td class="time" id="t400m"></td>
+          </tr>
+          <tr>
+            <td>1km</td>
+            <td class="time" id="t1km"></td>
+          </tr>
+          <tr>
+            <td>1mi</td>
+            <td class="time" id="t1mi"></td>
+          </tr>
+          <tr>
+            <td>2mi</td>
+            <td class="time" id="t2mi"></td>
+          </tr>
+          <tr>
+            <td>5km</td>
+            <td class="time" id="t5km"></td>
+          </tr>
+          <tr>
+            <td>10km</td>
+            <td class="time" id="t10km"></td>
+          </tr>
+          <tr>
+            <td>10mi</td>
+            <td class="time" id="t10mi"></td>
+          </tr>
+          <tr>
+            <td>half marathon</td>
+            <td class="time" id="thm"></td>
+          </tr>
+          <tr>
+            <td>marathon</td>
+            <td class="time" id="tm"></td>
+          </tr>
+        </table>
+      </div>
+      <div style="margin-top: 20px; text-align: center">
+        <span class="vdotlabel">vdot</span>: <span id="vdot"></span>
+      </div>
+      <div class="box examples">
         <p>
-          Enter a race pace to see splits. See below for examples of input you
-          can use.
-        </p>
-
-        <div class="box input">
-          <input
-            id="pace"
-            class="query"
-            value="3:30 marathon"
-            aria-label="race pace"
-          />
-        </div>
-        <div class="box">
-          <h2 style="text-align: center">Splits</h2>
-          <table class="pacetable">
-            <tr>
-              <td>200m</td>
-              <td class="time" id="t200m"></td>
-            </tr>
-            <tr>
-              <td>400m</td>
-              <td class="time" id="t400m"></td>
-            </tr>
-            <tr>
-              <td>1km</td>
-              <td class="time" id="t1km"></td>
-            </tr>
-            <tr>
-              <td>1mi</td>
-              <td class="time" id="t1mi"></td>
-            </tr>
-            <tr>
-              <td>2mi</td>
-              <td class="time" id="t2mi"></td>
-            </tr>
-            <tr>
-              <td>5km</td>
-              <td class="time" id="t5km"></td>
-            </tr>
-            <tr>
-              <td>10km</td>
-              <td class="time" id="t10km"></td>
-            </tr>
-            <tr>
-              <td>10mi</td>
-              <td class="time" id="t10mi"></td>
-            </tr>
-            <tr>
-              <td>half marathon</td>
-              <td class="time" id="thm"></td>
-            </tr>
-            <tr>
-              <td>marathon</td>
-              <td class="time" id="tm"></td>
-            </tr>
-          </table>
-        </div>
-        <div class="box examples">
-          <p>
-            Click an example to try it out:
-            <!-- TODO: 
+          Click an example to try it out:
+          <!-- TODO: 
       - support custom splits: "85 per 400m over 600m" maybe?
     -->
-          </p>
-
-          <ul class="examples">
-            <li data-example="" class="lbutton"><label>4:00/km</label></li>
-            <li data-example="" class="lbutton"><label>85 per 400m</label></li>
-            <li data-example="" class="lbutton"><label>1:25 10 mile</label></li>
-            <li data-example="" class="lbutton">
-              <label>3:00 marathon</label>
-            </li>
-            <li data-example="" class="lbutton">
-              <label>1:20 half marathon</label>
-            </li>
-            <li data-example="" class="lbutton">
-              <label>24:00 100 mile</label>
-            </li>
-          </ul>
-        </div>
-        <p>
-          Created by <a href="https://billmill.org">Bill Mill</a>. Source code
-          <a href="https://github.com/llimllib/racepace">available on GitHub</a>
         </p>
+
+        <ul class="examples">
+          <li data-example="" class="lbutton"><label>4:00/km</label></li>
+          <li data-example="" class="lbutton"><label>85 per 400m</label></li>
+          <li data-example="" class="lbutton"><label>1:25 10 mile</label></li>
+          <li data-example="" class="lbutton">
+            <label>3:00 marathon</label>
+          </li>
+          <li data-example="" class="lbutton">
+            <label>1:20 half marathon</label>
+          </li>
+          <li data-example="" class="lbutton">
+            <label>24:00 100 mile</label>
+          </li>
+        </ul>
       </div>
+      <p>
+        Created by <a href="https://billmill.org">Bill Mill</a>. Source code
+        <a href="https://github.com/llimllib/racepace">available on GitHub</a>
+      </p>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
