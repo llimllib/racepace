@@ -192,6 +192,7 @@ function useExample(evt) {
 
 window.addEventListener("DOMContentLoaded", async (_evt) => {
   handlePaceChange();
+  $("#pace").focus();
   $("#pace").addEventListener("change", handlePaceChange);
   // if we use keydown instead of keyup, we don't get the field after the
   // user's change
