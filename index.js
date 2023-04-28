@@ -161,11 +161,13 @@ function clearAll() {
 
 function handlePaceChange() {
   const val = $("#pace").value;
-  let [distanceM, timeS, seconds_per_m] = parseInput(val);
-  if (!seconds_per_m) {
+  const parseResult = parseInput(val);
+  if (!parseResult) {
     clearAll();
     return;
   }
+
+  const [distanceM, timeS, seconds_per_m] = parseResult;
 
   const vdot = calculateVdot(distanceM, timeS);
   $("#vdot").innerHTML = Math.round(vdot * 10) / 10;
