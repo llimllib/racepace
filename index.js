@@ -67,7 +67,7 @@ function parseUnit(input) {
 
   // If the unit is something like "500 meters", break it into n and a unit.
   // Doesn't allow nonsense like "2 marathons"
-  const custom_dist = input.match(/(\d+)\s*(\w*)/);
+  const custom_dist = input.match(/([\d\.]+)\s*(\w*)/);
   if (custom_dist && custom_dist.length == 3) {
     const n = +custom_dist[1];
     const custom_unit = custom_dist[2];
