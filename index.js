@@ -15,6 +15,7 @@ const KM_SP = /^(k|km|kms|kilometer|kilometers|kilometre|kilometres)$/i;
 const MI_SP = /^(mi|mis|mile|miles)$/i;
 const MARATHON = /^(marathon)$/i;
 const HALF_MARATHON = /^(half marathon)$/i;
+const VDOT = /^(vdot|v02|vo2)m?a?x?$/i;
 
 const EPSILON = 0.01;
 
@@ -81,6 +82,22 @@ function parseUnit(input) {
   }
 }
 
+// return a vdot value if found, otherwise return false
+function parseVdot(input) {
+  const parts = input.split(" ");
+  if (parts.length != 2) {
+    return false;
+  }
+  const [a, b] = parts;
+
+  if (a.match(VDOT)) {
+    return parseFloat(b);
+  } else if (b.match(VDOT)) {
+    return parseFloat(a);
+  }
+  return false;
+}
+
 function parseInput(input) {
   let time_unit = input.split(/per|\//);
   if (time_unit.length < 2) {
@@ -145,6 +162,28 @@ function calculateVdot(distanceM, timeS) {
   return racevo2 / vo2max;
 }
 
+// converted to js from
+// https://github.com/tractiming/trac-gae/blob/46c4a1f/apps/stats/vo2.py#L31-L66
+function predictFromVO2(vo2_max, distance, tolerance = 1e-5, max_iter = 250) {
+  var h = 0.001;
+  var vo2_f = function (x) {
+    return calculateVdot(distance, x) - vo2_max;
+  };
+  var dvo2_f = function (x) {
+    return (vo2_f(x + h) - vo2_f(x)) / h;
+  };
+  var t0 = (distance / 1000.0) * 3 * 60; // Initial guess is calculated at 3 min/km.
+
+  for (var i = 0; i < max_iter; i++) {
+    var t1 = t0 - vo2_f(t0) / dvo2_f(t0);
+    if (Math.abs(t1 - t0) / Math.abs(t1) < tolerance) {
+      return t1;
+    }
+    t0 = t1;
+  }
+  throw new Error("Failed to converge");
+}
+
 function clearAll() {
   $("#t200m").innerHTML = "";
   $("#t400m").innerHTML = "";
@@ -161,29 +200,55 @@ function clearAll() {
 
 function handlePaceChange() {
   const val = $("#pace").value;
+
+  const vdot = parseVdot(val);
+  if (vdot) {
+    return displayVdot(vdot);
+  }
+
   const parseResult = parseInput(val);
   if (!parseResult) {
     clearAll();
     return;
   }
+  displayTimes(...parseResult);
+}
 
-  const [distanceM, timeS, seconds_per_m] = parseResult;
+function displayVdot(vdot) {
+  $("#vdot").innerHTML = Math.round(vdot);
 
+  $("#t200m").innerHTML = displayTime(predictFromVO2(vdot, 200));
+  $("#t400m").innerHTML = displayTime(predictFromVO2(vdot, 400));
+  $("#t1km").innerHTML = displayTime(predictFromVO2(vdot, 1000));
+  $("#t1mi").innerHTML = displayTime(predictFromVO2(vdot, METERS_PER_MILE));
+  $("#t2mi").innerHTML = displayTime(predictFromVO2(vdot, 2 * METERS_PER_MILE));
+  $("#t5km").innerHTML = displayTime(predictFromVO2(vdot, 5000));
+  $("#t10km").innerHTML = displayTime(predictFromVO2(vdot, 10000));
+  $("#t10mi").innerHTML = displayTime(
+    predictFromVO2(vdot, 10 * METERS_PER_MILE)
+  );
+  $("#thm").innerHTML = displayTime(
+    predictFromVO2(vdot, METERS_PER_MARATHON / 2)
+  );
+  $("#tm").innerHTML = displayTime(predictFromVO2(vdot, METERS_PER_MARATHON));
+}
+
+function displayTimes(distanceM, timeS, secondsPerM) {
   const vdot = calculateVdot(distanceM, timeS);
   $("#vdot").innerHTML = Math.round(vdot * 10) / 10;
 
-  console.log("seconds per meter: ", seconds_per_m);
+  console.log("seconds per meter: ", secondsPerM);
 
-  $("#t200m").innerHTML = displayTime(seconds_per_m * 200);
-  $("#t400m").innerHTML = displayTime(seconds_per_m * 400);
-  $("#t1km").innerHTML = displayTime(seconds_per_m * 1000);
-  $("#t1mi").innerHTML = displayTime(seconds_per_m * METERS_PER_MILE);
-  $("#t2mi").innerHTML = displayTime(seconds_per_m * 2 * METERS_PER_MILE);
-  $("#t5km").innerHTML = displayTime(seconds_per_m * 5000);
-  $("#t10km").innerHTML = displayTime(seconds_per_m * 10000);
-  $("#t10mi").innerHTML = displayTime(seconds_per_m * 10 * METERS_PER_MILE);
-  $("#thm").innerHTML = displayTime(seconds_per_m * (METERS_PER_MARATHON / 2));
-  $("#tm").innerHTML = displayTime(seconds_per_m * METERS_PER_MARATHON);
+  $("#t200m").innerHTML = displayTime(secondsPerM * 200);
+  $("#t400m").innerHTML = displayTime(secondsPerM * 400);
+  $("#t1km").innerHTML = displayTime(secondsPerM * 1000);
+  $("#t1mi").innerHTML = displayTime(secondsPerM * METERS_PER_MILE);
+  $("#t2mi").innerHTML = displayTime(secondsPerM * 2 * METERS_PER_MILE);
+  $("#t5km").innerHTML = displayTime(secondsPerM * 5000);
+  $("#t10km").innerHTML = displayTime(secondsPerM * 10000);
+  $("#t10mi").innerHTML = displayTime(secondsPerM * 10 * METERS_PER_MILE);
+  $("#thm").innerHTML = displayTime(secondsPerM * (METERS_PER_MARATHON / 2));
+  $("#tm").innerHTML = displayTime(secondsPerM * METERS_PER_MARATHON);
 }
 
 function useExample(evt) {
